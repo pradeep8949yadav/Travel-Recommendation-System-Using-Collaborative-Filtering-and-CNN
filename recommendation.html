@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This is a webpage about the Travel Recommendation System">
+    <meta name="keywords" content="Travel, recommendation, India, tourism">
+    <meta name="author" content="Your Name">
+    <title>Travel Recommendation System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+
+        .overlay {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 105%;
+        }
+
+        /* Container styling */
+        .container {
+            position: relative;
+            z-index: 2;
+            margin-top: 5%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Title and Description Styling */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        p {
+            color: #555;
+            font-size: 1.2rem;
+        }
+
+        /* Form Styling */
+        .form-label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-select, .form-control {
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        .form-select:focus, .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Button Styling */
+        .btn-custom {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Table Styling */
+        .recommendations-table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+
+        .recommendations-table th, .recommendations-table td {
+            text-align: center;
+            padding: 12px;
+            font-size: 14px;
+            border: 1px solid #dee2e6;
+        }
+
+        .recommendations-table th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .recommendations-table tr:nth-child(even) {
+            background-color: #f1f3f5;
+        }
+
+        .recommendations-table tr:hover {
+            background-color: #e9ecef;
+        }
+
+        /* Alert Styling */
+        .alert {
+            font-size: 1rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .btn-custom {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+        <h1 class="text-center">Travel Recommendation System</h1>
+        <p class="text-center">Enter your details to get personalized travel recommendations</p>
+        <form action="/recommend" method="POST">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="UserId" class="form-label">User ID</label>
+                    <input type="number" id="UserId" name="user_id" class="form-control" placeholder="Enter your user ID" required min="1">
+                </div>
+                <div class="col-md-4">
+                    <label for="name" class="form-label">Destination Name</label>
+                    <select id="name" name="name" class="form-select" required>
+                        <option value="">Select a Destination</option>
+                        <option value="Jaipur City">Jaipur City</option>
+                        <option value="Taj Mahal">Taj Mahal</option>
+                        <option value="Kerala Backwaters">Kerala Backwaters</option>
+                        <option value="Goa Beaches">Goa Beaches</option>
+                        <option value="Leh Ladakh">Leh Ladakh</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="type" class="form-label">Type</label>
+                    <select id="type" name="type" class="form-select" required>
+                        <option value="">Select Type</option>
+                        <option value="City">City</option>
+                        <option value="Historical">Historical</option>
+                        <option value="Nature">Nature</option>
+                        <option value="Beach">Beach</option>
+                        <option value="Adventure">Adventure</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="state" class="form-label">State</label>
+                    <select id="state" name="state" class="form-select" required>
+                        <option value="">Select a State</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="bestTime" class="form-label">Best Time to Visit</label>
+                    <select id="bestTime" name="best_time" class="form-select" required>
+                        <option value="">Select Best Time</option>
+                        <option value="Oct-Mar">Oct-Mar</option>
+                        <option value="Nov-Feb">Nov-Feb</option>
+                        <option value="Sep-Mar">Sep-Mar</option>
+                        <option value="Nov-Mar">Nov-Mar</option>
+                        <option value="Apr-Jun">Apr-Jun</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="preferences" class="form-label">Preferences</label>
+                    <select id="preferences" name="preferences" class="form-select" required>
+                        <option value="">Select Preferences</option>
+                        <option value="City, Historical">City, Historical</option>
+                        <option value="Nature, Adventure">Nature, Adventure</option>
+                        <option value="Beaches, Historical">Beaches, Historical</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row g-3 mt-3">
+                <div class="col-md-4">
+                    <label for="gender" class="form-label">Gender</label>
+                    <select id="gender" name="gender" class="form-select" required>
+                        <option value="">Select Gender</option>
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="adults" class="form-label">Number of Adults</label>
+                    <input type="number" id="adults" name="adults" class="form-control" placeholder="Enter number of adults" required min="1">
+                </div>
+                <div class="col-md-4">
+                    <label for="children" class="form-label">Number of Children</label>
+                    <input type="number" id="children" name="children" class="form-control" placeholder="Enter number of children" required min="0">
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-custom">Get Recommendations</button>
+                <br>
+                <span style="display: inline-block; width: 205px;">
+                    <a href="home.html" class="btn btn-custom mt-3" style="width: 100%;">Home Page</a>
+                </span>
+            </div>
+            <br>
+
+
+
+        </form>
+
+        {% if predicted_popularity %}
+        <h2 class="mt-5 text-center">Recommended Destinations</h2>
+        <table class="table table-bordered recommendations-table">
+            <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>State</th>
+                    <th>Type</th>
+                    <th>Best Time to Visit</th>
+                    <th>Popularity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for destination in recommended_destinations.itertuples() %}
+                <tr>
+                    <td>{{ destination.Name }}</td>
+                    <td>{{ destination.State }}</td>
+                    <td>{{ destination.Type }}</td>
+                    <td>{{ destination.BestTimeToVisit }}</td>
+                    <td>{{ destination.Popularity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="alert alert-info mt-4" role="alert">
+            <strong>Predicted Popularity Score:</strong> {{ predicted_popularity }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
